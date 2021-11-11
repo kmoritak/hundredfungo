@@ -42,3 +42,21 @@ f03 <- function(str) {
         collapse = ""
     )
 }
+
+f04 <- function(str) {
+    sp <- strsplit(str, " ")[[1]]
+    one_pos <- c(1, 5, 6, 7, 8, 9, 15, 16, 19)
+    l <- list(seq(1:length(sp)))
+
+    names <- c()
+    for (i in seq(1:length(sp))) {
+        s <- ifelse(
+            i %in% one_pos,
+            strsplit(sp[i], "")[[1]][1],
+            paste(strsplit(sp[i], "")[[1]][1:2], collapse = "")
+        )
+        names <- c(names, s)
+    }
+    names(l[[1]]) <- names
+    l[[1]]
+}

@@ -18,3 +18,18 @@ test_that("03. 円周率", {
     "3141592753589710"
   )
 })
+
+test_that("04. ", {
+  exp <- list(seq(1:20))
+  names <- c()
+  for (c in strsplit("H He Li Be B C N O F Ne Na Mi Al Si P S Cl Ar K Ca", " ")) {
+    names <- c(names, c)
+  }
+  names(exp[[1]]) <- names
+  expect_equal(
+    f04(
+      "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
+    ),
+    exp[[1]]
+  )
+})

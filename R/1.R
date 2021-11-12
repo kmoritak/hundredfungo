@@ -60,3 +60,16 @@ f04 <- function(str) {
     names(l[[1]]) <- names
     l[[1]]
 }
+
+f05 <- function(str, is_word_bigram = TRUE) {
+    ngram <- function(str, n) {
+        ret <- list()
+        for (i in 1:(length(str) - 1)) {
+            ret[[i]] <- c(str[i], str[i + 1])
+        }
+        ret
+    }
+    delim <- ifelse(is_word_bigram, " ", "")
+    str <- strsplit(str, delim)[[1]]
+    ngram(str, 2)
+}

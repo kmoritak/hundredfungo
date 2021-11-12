@@ -19,7 +19,7 @@ test_that("03. 円周率", {
   )
 })
 
-test_that("04. ", {
+test_that("04. 元素記号", {
   exp <- list(seq(1:20))
   names <- c()
   for (c in strsplit("H He Li Be B C N O F Ne Na Mi Al Si P S Cl Ar K Ca", " ")) {

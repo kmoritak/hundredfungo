@@ -1,37 +1,82 @@
 test_that("00. 文字列の逆順", {
-  expect_equal(f00("stressed"), "desserts")
+  act <- sapply(
+    lapply(strsplit("stressed", NULL), rev),
+    paste,
+    collapse = ""
+  )
+  expect_equal(act, "desserts")
 })
 
 test_that("01. 「パタトクカシーー」", {
-  expect_equal(f01("パタトクカシーー"), "パトカー")
+  act <- ""
+  for (i in seq(1, 7, 2)) {
+    act <- paste(act, substr("パタトクカシーー", i, i), sep = "")
+  }
+  expect_equal(act, "パトカー")
 })
 
 test_that("02. 「パトカー」＋「タクシー」＝「パタトクカシーー」", {
-  expect_equal(f02("パトカー", "タクシー"), "パタトクカシーー")
+  act <- ""
+  for (i in seq(1, nchar("パトカー"))) {
+    act <- paste(
+      act,
+      paste(
+        substr("パトカー", i, i), substr("タクシー", i, i),
+        sep = ""
+      ),
+      sep = ""
+    )
+  }
+  expect_equal(act, "パタトクカシーー")
 })
 
 test_that("03. 円周率", {
+  act <- paste(
+    lapply(
+      lapply(
+        strsplit(
+          stringr::str_replace(
+            "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.", "[,.]", ""
+          ), " "
+        ),
+        nchar
+      ),
+      as.character
+    )[[1]],
+    sep = "",
+    collapse = ""
+  )
+
   expect_equal(
-    f03(
-      "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
-    ),
+    act,
     "3141592753589710"
   )
 })
 
 test_that("04. 元素記号", {
+  input <- "H He Li Be B C N O F Ne Na Mi Al Si P S Cl Ar K Ca"
+  sp <- strsplit(input, " ")[[1]]
+  one_pos <- c(1, 5, 6, 7, 8, 9, 15, 16, 19)
+
+  act <- list(seq(1:length(sp)))
+  names <- c()
+  for (i in seq(1:length(sp))) {
+    s <- ifelse(
+      i %in% one_pos,
+      strsplit(sp[i], "")[[1]][1],
+      paste(strsplit(sp[i], "")[[1]][1:2], collapse = "")
+    )
+    names <- c(names, s)
+  }
+  names(act[[1]]) <- names
+
   exp <- list(seq(1:20))
   names <- c()
-  for (c in strsplit("H He Li Be B C N O F Ne Na Mi Al Si P S Cl Ar K Ca", " ")) {
+  for (c in strsplit(input, " ")) {
     names <- c(names, c)
   }
   names(exp[[1]]) <- names
-  expect_equal(
-    f04(
-      "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
-    ),
-    exp[[1]]
-  )
+  expect_equal(act, exp)
 })
 
 test_that("05. n-gram", {
@@ -55,6 +100,36 @@ test_that("05. n-gram", {
   exp_letter_bigram[[11]] <- c("P", "e")
   exp_letter_bigram[[12]] <- c("e", "r")
 
-  expect_equal(f05(str, TRUE), exp_word_bigram)
-  expect_equal(f05(str, FALSE), exp_letter_bigram)
+  expect_equal(.ngram(strsplit(str, " ")[[1]], 2), exp_word_bigram)
+  expect_equal(.ngram(strsplit(str, "")[[1]], 2), exp_letter_bigram)
+})
+
+test_that("06. 集合", {
+  s0 <- "paraparaparadise"
+  s1 <- "paragraph"
+
+  x <- .ngram(strsplit(s0, "")[[1]], 2)
+  y <- .ngram(strsplit(s1, "")[[1]], 2)
+
+  u <- union(x, y)
+  i <- intersect(x, y)
+  d <- setdiff(x, y)
+
+  # Just slacking...
+  expect_equal(u, union(x, y))
+  expect_equal(i, intersect(x, y))
+  expect_equal(d, setdiff(x, y))
+  expect_true(TRUE %in% sapply(x, function(x) {
+    x == c("s", "e")
+  }))
+  expect_false(TRUE %in% sapply(y, function(x) {
+    x == c("s", "e")
+  }))
+})
+
+test_that("07. テンプレートによる文生成", {
+  x <- 12
+  y <- "気温"
+  z <- 22.4
+  expect_equal(.template_07(x, y, z), "12時の気温は22.4")
 })

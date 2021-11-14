@@ -20,7 +20,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install some packages
-        run: sudo apt-get -y install libcurl-devel
+        run: sudo apt-get -y install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           renv::restore()

@@ -29,5 +29,5 @@ jobs:
       - name: Check
         run: |
           devtools::load_all()
-          testthat::test_packages('hundredfungo')
+          testthat::test_package('hundredfungo')
         shell: Rscript {0}

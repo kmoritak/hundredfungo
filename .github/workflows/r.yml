@@ -19,6 +19,10 @@ jobs:
         uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
         with:
           r-version: ${{ matrix.r-version }}
+      - name: Install some packages
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install curl
       - name: Install dependencies
         run: |
           renv::restore()

@@ -5,4 +5,5 @@
 Codes and their tests with `testthat`.
 
 Github actions doesn't work well.
-- [![R](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml)
+- master: [![R](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml)
+- develop: [![R](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml/badge.svg?branch=develop)](https://github.com/kmoritak/hundredfungo/actions/workflows/r.yml)

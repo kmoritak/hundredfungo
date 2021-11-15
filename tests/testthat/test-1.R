@@ -133,3 +133,34 @@ test_that("07. テンプレートによる文生成", {
   z <- 22.4
   expect_equal(.template_07(x, y, z), "12時の気温は22.4")
 })
+
+test_that("08. 暗号文", {
+  input <- "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
+  expect_equal(
+    cipher(cipher(strsplit(input, "")[[1]])),
+    input
+  )
+})
+
+test_that("09. Typoglycemia", {
+  input <- "I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
+  # input <- "Hello alice"
+  sp <- strsplit(input, " ")[[1]]
+  t <- lapply(sp, function(x) {
+    if (nchar(x) <= 4) {
+      return(x)
+    }
+    c1 <- substr(x, 1, 1)
+    c2 <- substr(x, nchar(x), nchar(x))
+    .shuffle <- function(x) {
+      paste(
+        sample(strsplit(substr(x, 2, nchar(x) - 1), "")[[1]]),
+        sep = "", collapse = ""
+      )
+    }
+    y <- .shuffle(x)
+    paste(c1, y, c2, sep = "", collapse = "")
+  })
+  print(paste(unlist(t), sep = " ", collapse = " "))
+  expect_true(TRUE)
+})
